@@ -14,17 +14,19 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.2.2.BUILD-SNAPSHOT</version>
+    <version>1.2.1.RELEASE</version>
     <relativePath/>
     <!-- lookup parent from repository -->
   </parent>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <start-class>demo.DemoApplication</start-class>
+    <start-class>net.DemoApplication</start-class>
     <java.version>1.7</java.version>
     <maven.failsafe.plugin.version>2.15</maven.failsafe.plugin.version>
     <hikaricp.version>2.1.0</hikaricp.version>
+    <maven.surefire.plugin.version>2.15</maven.surefire.plugin.version>
+    <javax-cache.version>1.0.0</javax-cache.version>
   </properties>
 
   <dependencies>
@@ -46,13 +48,22 @@
       <artifactId>spring-security-web</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
     </dependency>
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <scope>test</scope>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.cache</groupId>
+      <artifactId>cache-api</artifactId>
+      <version>${javax-cache.version}</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -73,7 +84,7 @@
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP-java6</artifactId>
       <version>${hikaricp.version}</version>
-      <scope>compile</scope>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -82,6 +93,17 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven.surefire.plugin.version}</version>
+        <configuration>
+          <environmentVariables>
+            <env>dev</env>
+          </environmentVariables>
+          <excludedGroups>net.test.IntegrationTest</excludedGroups>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -107,7 +129,7 @@
           <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=512m</argLine>
           <useManifestOnlyJar>false</useManifestOnlyJar>
           <useSystemClassLoader>true</useSystemClassLoader>
-          <groups>org.test.IntegrationTest</groups>
+          <groups>net.test.IntegrationTest</groups>
           <includes>
             <include>**/*IntegrationTest.java</include>
           </includes>

@@ -1,4 +1,4 @@
-package org.test;
+package net.test;
 
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;

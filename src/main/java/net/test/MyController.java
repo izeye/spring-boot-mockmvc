@@ -1,4 +1,4 @@
-package org.test;
+package net.test;
 
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by petar on 15-2-17.
@@ -18,7 +18,7 @@ import java.util.Locale;
 @RequestMapping( value = { "/", "/index.html" } )
 public class MyController
 {
-    @Resource( name = "messageSource" )
+    @Resource( name = "customMessageSource" )
     private MessageSource messageSource;
 
     @RequestMapping( method = RequestMethod.GET )
@@ -27,8 +27,6 @@ public class MyController
                         final HttpServletRequest request )
     {
         final String msg = messageSource.getMessage( "custom.link", null, Locale.ENGLISH );
-
-        System.out.println( msg );
 
         return "home";
     }

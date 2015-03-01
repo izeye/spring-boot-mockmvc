@@ -1,13 +1,16 @@
-package org.test;
+package net.test;
 
+import net.DemoApplication;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.experimental.categories.Category;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -21,8 +24,9 @@ import javax.annotation.Resource;
  * Created by petar on 15-2-17.
  */
 @WebAppConfiguration
+@RunWith( SpringJUnit4ClassRunner.class )
 @Category( IntegrationTest.class )
-@SpringApplicationConfiguration( classes = TestConfig.class )
+@SpringApplicationConfiguration( classes = { TestConfig.class, DemoApplication.class } )
 @TestExecutionListeners( { DependencyInjectionTestExecutionListener.class, TransactionalTestExecutionListener.class } )
 public abstract class BaseIntegrationTest
     extends AbstractJUnit4SpringContextTests
